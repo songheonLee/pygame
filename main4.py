@@ -36,14 +36,14 @@ if numA == 1:
     pygame.draw.circle(display_surface, RED, (circle_x, circle_y), 5, 0)  # 숫자 1일 경우 빨간색 원 출력
 else:
     # 첫 번째 줄 (맨 위)
-    pygame.draw.circle(display_surface, WHITE, (circle_x, circle_y), 5, 0)
+    pygame.draw.circle(display_surface, RED, (circle_x, circle_y), 5, 0)
 
     # 중간 줄
     for i in range(1, numA - 1):
         circle_y += 30  # 줄 간격
         offset = i * 30  # 좌우 간격
-        pygame.draw.circle(display_surface, WHITE, (circle_x - offset, circle_y), 5, 0)
-        pygame.draw.circle(display_surface, WHITE, (circle_x + offset, circle_y), 5, 0)
+        pygame.draw.circle(display_surface, GREEN, (circle_x - offset, circle_y), 5, 0)
+        pygame.draw.circle(display_surface, BLACK, (circle_x + offset, circle_y), 5, 0)
 
     # 마지막 줄 (맨 아래)
     circle_y += 30
