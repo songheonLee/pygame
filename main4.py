@@ -1,5 +1,6 @@
 #숫자로 입력값 숫자를 받아서 가운데가 비어있는 이등변삼각형을 출력하세요.
 #숫자가 1일 경우에는 O 하나만 출력하세요.
+# 삼각형을 마지막 좌측에 맞게 그리기 가장 마지막 열에 왼쪽 끝에 닿도록
 import pygame
 
 # pygame 초기화
@@ -29,27 +30,28 @@ numA = int(strA)
 
 # 원의 시작 위치 설정
 circle_x = WINDOW_WIDTH // 2  # 가운데 정렬
-circle_y = 50  # 시작 높이
+circle_y = 30  # 시작 높이
 
 # 입력값만큼 원 그리기
 if numA == 1:
     pygame.draw.circle(display_surface, RED, (circle_x, circle_y), 5, 0)  # 숫자 1일 경우 빨간색 원 출력
 else:
+    start_x = 5 # 왼쪽 끝에서 시작
     # 첫 번째 줄 (맨 위)
-    pygame.draw.circle(display_surface, RED, (circle_x, circle_y), 5, 0)
+    pygame.draw.circle(display_surface, RED, (start_x + (numA - 1) * 30, circle_y), 5, 0)
 
     # 중간 줄
     for i in range(1, numA - 1):
         circle_y += 30  # 줄 간격
-        offset = i * 30  # 좌우 간격
-        pygame.draw.circle(display_surface, GREEN, (circle_x - offset, circle_y), 5, 0)
-        pygame.draw.circle(display_surface, BLACK, (circle_x + offset, circle_y), 5, 0)
+        # 양쪽 끝에만 원 그리기, start_x 기준으로 x 좌표 계산
+        pygame.draw.circle(display_surface, GREEN, (start_x + (numA - 1 - i) * 30, circle_y), 5, 0)  
+        pygame.draw.circle(display_surface, BLACK, (start_x + (numA - 1 + i) * 30, circle_y), 5, 0)  
 
-    # 마지막 줄 (맨 아래)
+    # 마지막 줄 (맨 아래, 삼각형 모양, 왼쪽 끝에 닿도록 조정)
     circle_y += 30
-    for i in range(numA * 2 - 1): # 밑변에 원 7개 출력
-        pygame.draw.circle(display_surface, WHITE, (circle_x - (numA - 1) * 30 + i * 30, circle_y), 5, 0)  
-        # 밑변 원의 x 좌표 및 간격 수정
+    for i in range(numA * 2 - 1):  # 밑변에 원 출력
+        pygame.draw.circle(display_surface, WHITE, (start_x + i * 30, circle_y), 5, 0)
+        
 
 # 게임이 동작하는 동안 이벤트
 running = True
