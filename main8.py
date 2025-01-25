@@ -27,8 +27,7 @@ BLUE = (0, 0, 255)
 display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption('Hello World!')
 
-# 백그라운드 색깔 설정
-display_surface.fill(BLUE)
+
 
 # 게임이 동작하는 동안 이벤트 처리 
 play = True
@@ -36,7 +35,10 @@ while play:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             play = False
+        
         if event.type == pygame.KEYDOWN:
+            # 백그라운드 색깔 설정
+            display_surface.fill(BLUE)
             # 선 그리기 (L 키)
             if event.key == pygame.K_l:
                 start_x = int(input("시작점 x 좌표를 입력하세요: "))
@@ -69,6 +71,7 @@ while play:
                     'BLACK': BLACK
                 }[color_str]
                 pygame.draw.circle(display_surface, color, (center_x, center_y), radius, thickness)
+                
 
             # 네모 그리기 (R 키)
             elif event.key == pygame.K_r:
@@ -76,7 +79,6 @@ while play:
                 left_y = int(input("왼쪽 상단점 y 좌표를 입력하세요: "))
                 right_x = int(input("오른쪽 하단점 x 좌표를 입력하세요: "))
                 right_y = int(input("오른쪽 하단점 y 좌표를 입력하세요: "))
-                thickness = int(input("선분의 굵기를 입력하세요: "))
                 color_str = input("네모의 색상을 입력하세요 (RED, GREEN, BLUE, WHITE, BLACK): ").upper()
                 color = {
                     'RED': RED,
@@ -85,7 +87,7 @@ while play:
                     'WHITE': WHITE,
                     'BLACK': BLACK
                 }[color_str]
-                pygame.draw.rect(display_surface, color, pygame.Rect(left_x, left_y, right_x - left_x, right_y - left_y), thickness)
+                pygame.draw.rect(display_surface, color, pygame.Rect(left_x, left_y, right_x - left_x, right_y - left_y))
                 
             # 삼각형 그리기 (T 키)
             elif event.key == pygame.K_t:
@@ -129,6 +131,6 @@ while play:
                 }[color_str]
                 pygame.draw.polygon(display_surface, color, points)  # 다이아몬드 그리기
                 
-    pygame.display.update()
-
+        pygame.display.update()
+        
 pygame.quit()
