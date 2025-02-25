@@ -42,10 +42,13 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_l:
                 animation_mode = "line"  # 'L' 키를 누르면 직선 애니메이션 시작
+                x, y = line_targets[0]
                 current_target = 0 # 인덱스의 초기 값을 0 애니메이션이 시작될 때 원은 첫 번째 목표 지점으로 이동
             elif event.key == pygame.K_t:
                 animation_mode = "triangle"  # 't' 키를 누르면 삼각형 애니메이션 시작
                 current_target = 0
+                x, y = triangle_targets[current_target]
+                
 
     # 애니메이션 로직
     if animation_mode:
@@ -53,13 +56,14 @@ while running:
         target_x, target_y = (line_targets if animation_mode == "line" else triangle_targets)[current_target] #[current_target]은 변수 값을 인덱스로 사용하여 특정 요소를 선택
         
         # 목표 지점으로 이동``
+        
         ax = target_x - x # 원의 현재 x 좌표와 목표 지점의 x 좌표 사이의 거리를 계산해 ax 에 저장
         ay = target_y - y
-      
         distance = (ax**2 + ay**2)**0.5
         # distance = 원의 현재 위치와 목표 위치 사이의 전체 거리 피타고라스 정리를 사용하여 원의 현재 위치와 목표 지점 사이의 거리를 계산 ()의 0.5제곱은 √() 제곱근을 구하는 것
        
-        if distance > 0:  # 목표 지점에 도착하지 않았으면 원을 이동 거리가 1보다 크면 아직 목표 지점에 도착하지 않은 것으로 간주
+        if distance > 0.1:  # 목표 지점에 도착하지 않았으면 원을 이동 거리가 1보다 크면 아직 목표 지점에 도착하지 않은 것으로 간주
+            
             x += ax / distance #ax = 원이 이동해야 할 x축 방향의 거리, 원을 x축 방향으로 이동시키는 코드 원이 이동해야 할 x축 방향의 거리 (ax) 를 전체 거리 (distance) 로 나눈 값
             y += ay / distance
         else:
@@ -68,7 +72,7 @@ while running:
             # 1 증가시켜 다음 목표 지점으로 전환합니다. 
             # % 연산자는 인덱스가 목표 지점 목록의 범위를 벗어나지 않도록 합니다 (즉, 목록의 마지막 요소에 도달하면 다시 첫 번째 요소로 돌아갑니다). 
             # len(): 목표 지점 목록의 길이를 계산 
-            
+            print(current_target)
     # 화면을 흰색으로 채우기
     display_surface.fill(white)
 
